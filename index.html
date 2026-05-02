@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Position Sizer — Trade with discipline</title>
+    <meta name="description" content="Free position size calculator for stocks, crypto, forex. Risk per trade made simple.">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="#" class="nav-logo">
+                <svg class="logo-bolt" viewBox="0 0 24 24" fill="none">
+                    <path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z" fill="currentColor"/>
+                </svg>
+                Position Sizer
+            </a>
+            <a href="https://volta-eng.netlify.app" class="nav-link" target="_blank">by VOLTA →</a>
+        </div>
+    </nav>
+
+    <!-- HERO + CALCULATOR -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Stop blowing up your account.</h1>
+            <p class="hero-subtitle">
+                The #1 reason traders lose money is sizing positions wrong.<br>
+                Calculate the right size in 5 seconds. Free, no signup.
+            </p>
+        </div>
+
+        <!-- CALCULATOR -->
+        <div class="calculator">
+            <div class="calc-grid">
+                <!-- INPUTS -->
+                <div class="calc-inputs">
+                    <h2 class="calc-section-title">Your Setup</h2>
+
+                    <div class="input-group">
+                        <label for="accountSize">
+                            Account Balance ($)
+                            <span class="info-tooltip" data-tooltip="Your total trading capital. Don't include emergency funds or money you can't afford to lose.">?</span>
+                        </label>
+                        <input type="number" id="accountSize" value="10000" step="100" min="0">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="riskPercent">
+                            Risk Per Trade (%)
+                            <span class="info-tooltip" data-tooltip="Pros risk 1-2% per trade. Beginners should risk 0.5-1%. Higher = faster ruin.">?</span>
+                        </label>
+                        <div class="input-with-presets">
+                            <input type="number" id="riskPercent" value="1" step="0.25" min="0.1" max="10">
+                            <div class="presets">
+                                <button class="preset" data-val="0.5">0.5%</button>
+                                <button class="preset active" data-val="1">1%</button>
+                                <button class="preset" data-val="2">2%</button>
+                                <button class="preset" data-val="3">3%</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Direction</label>
+                        <div class="direction-toggle">
+                            <button class="direction-btn active" data-side="long">📈 Long</button>
+                            <button class="direction-btn" data-side="short">📉 Short</button>
+                        </div>
+                    </div>
+
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="entryPrice">
+                                Entry Price ($)
+                            </label>
+                            <input type="number" id="entryPrice" value="100" step="0.01" min="0">
+                        </div>
+
+                        <div class="input-group">
+                            <label for="stopPrice">
+                                Stop Loss ($)
+                            </label>
+                            <input type="number" id="stopPrice" value="97" step="0.01" min="0">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="targetPrice">
+                            Take Profit ($) <span class="optional">optional</span>
+                        </label>
+                        <input type="number" id="targetPrice" value="106" step="0.01" min="0">
+                    </div>
+                </div>
+
+                <!-- RESULTS -->
+                <div class="calc-results">
+                    <h2 class="calc-section-title">Your Position</h2>
+
+                    <div class="result-main">
+                        <div class="result-label">Position Size</div>
+                        <div class="result-value-big" id="positionSize">100.00</div>
+                        <div class="result-unit">units / shares / contracts</div>
+                    </div>
+
+                    <div class="result-grid">
+                        <div class="result-item">
+                            <div class="result-label">Position Value</div>
+                            <div class="result-value" id="positionValue">$10,000.00</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="result-label">Risk Amount</div>
+                            <div class="result-value" id="riskAmount">$100.00</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="result-label">Stop Distance</div>
+                            <div class="result-value" id="stopDistance">3.00%</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="result-label">Leverage Needed</div>
+                            <div class="result-value" id="leverageNeeded">1.0x</div>
+                        </div>
+                    </div>
+
+                    <div class="rr-section">
+                        <div class="result-label">Risk / Reward Ratio</div>
+                        <div class="result-value-big" id="rrRatio">2.00R</div>
+                        <div class="rr-hint" id="rrHint">Good R:R — risk $1 to make $2</div>
+                    </div>
+
+                    <div class="warning hidden" id="warning"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHY -->
+    <section class="why">
+        <div class="container">
+            <div class="section-label">Why this matters</div>
+            <h2 class="section-title">Most traders die from position sizing.</h2>
+
+            <div class="why-grid">
+                <div class="why-card">
+                    <div class="why-stat">95%</div>
+                    <p>of retail traders lose money long-term — almost all due to oversized positions and emotional risk decisions.</p>
+                </div>
+                <div class="why-card">
+                    <div class="why-stat">5</div>
+                    <p>consecutive losses at 2% risk = -10% drawdown. At 5% risk = -25%. The math compounds against you fast.</p>
+                </div>
+                <div class="why-card">
+                    <div class="why-stat">1%</div>
+                    <p>per-trade risk is what professional fund managers use. Anything higher is gambling.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <p>Position Sizer · A free tool by <a href="https://volta-eng.netlify.app" target="_blank">VOLTA</a> · © 2026</p>
+            <p class="disclaimer">Not financial advice. Trading involves risk. Use responsibly.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
